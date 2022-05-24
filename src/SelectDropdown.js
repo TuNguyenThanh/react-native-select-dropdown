@@ -1,5 +1,15 @@
 import React, {useEffect, useState, useRef, forwardRef, useImperativeHandle} from 'react';
-import {View, Text, TouchableOpacity, FlatList, Dimensions, ActivityIndicator, Modal, I18nManager} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  FlatList,
+  Dimensions,
+  ActivityIndicator,
+  Modal,
+  I18nManager,
+  Image
+} from "react-native"
 import styles from './styles';
 import findIndexInArr from './helpers/findIndexInArr';
 import calculateDropdownHeight from './helpers/calculateDropdownHeight';
@@ -33,6 +43,9 @@ const SelectDropdown = (
     rowStyle /* style object for row */,
     rowTextStyle /* style object for row text */,
     renderCustomizedRowChild /* function returns React component for customized row */,
+    indexSelected,
+    rowSelectedStyle,
+    iconCheck,
   },
   ref,
 ) => {
@@ -148,15 +161,35 @@ const SelectDropdown = (
     return (
       <TouchableOpacity
         activeOpacity={0.8}
-        style={{...styles.dropdownRow, ...rowStyle}}
-        onPress={() => onSelectItem(item, index)}>
+        style={[
+          {...styles.dropdownRow, ...rowStyle},
+          indexSelected === index && rowSelectedStyle
+        ]}
+        onPress={() => onSelectItem(item, index)}
+      >
         {renderCustomizedRowChild ? (
-          <View style={styles.dropdownCustomizedRowParent}>{renderCustomizedRowChild(item, index)}</View>
+          <View
+            style={styles.dropdownCustomizedRowParent}
+          >
+            {renderCustomizedRowChild(item, index)}
+          </View>
         ) : (
-          <Text numberOfLines={1} allowFontScaling={false} style={[styles.dropdownRowText, rowTextStyle]}>
+          <Text
+            numberOfLines={1}
+            allowFontScaling={false}
+            style={[styles.dropdownRowText, rowTextStyle]}
+          >
             {rowTextForSelection ? rowTextForSelection(item, index) : item.toString()}
           </Text>
         )}
+        {
+          indexSelected === index &&
+          <Image
+            source={iconCheck}
+            resizeMethod={'contain'}
+            style={styles.iconCheck}
+          />
+        }
       </TouchableOpacity>
     );
   };
