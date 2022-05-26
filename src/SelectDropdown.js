@@ -186,7 +186,7 @@ const SelectDropdown = (
           indexSelected === index &&
           <Image
             source={iconCheck}
-            resizeMethod={'contain'}
+            resizeMode={'contain'}
             style={styles.iconCheck}
           />
         }
