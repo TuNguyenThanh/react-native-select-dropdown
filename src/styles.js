@@ -66,6 +66,9 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     elevation: 10,
   },
+  iconCheck: {
+    marginHorizontal: 10
+  },
 });
 
 export default styles;
